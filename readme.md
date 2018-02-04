@@ -1,4 +1,4 @@
-Desarrollando un blog bsico con Laravel, usando:
+Desarrollando un blog básico con Laravel, usando:
   <p><b>Laravel 5.5</b></p>
   <p><b>Plantillas HTML5, CSS3, JavaScript.</b></p>
   <ul>
