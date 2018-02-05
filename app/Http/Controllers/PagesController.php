@@ -9,8 +9,13 @@ class PagesController extends Controller
 {
     public function home(){
 
-        $posts = Post::orderby('published_at')->get();
+        $posts = Post::published()->get();
+
         return view('welcome', compact('posts'));
+
+    }
+
+    public function show($id){
 
     }
 }

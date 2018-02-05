@@ -2,6 +2,7 @@
 
 use App\Category;
 use App\Post;
+use App\Tag;
 use Illuminate\Database\Seeder;
 
 class PostsTableSeeder extends Seeder
@@ -15,15 +16,19 @@ class PostsTableSeeder extends Seeder
     {
         Post::truncate();
         Category::truncate();
+        Tag::truncate();
 
         Post::flushEventListeners();
         Category::flushEventListeners();
+        Tag::flushEventListeners();
 
         $cantidadCategorias = 10;
-        $cantidadPosts = 3;
+        $cantidadPosts = 5;
+        $cantidadTags = 3;
 
         factory(Post::class, $cantidadPosts)->create();
         factory(Category::class,$cantidadCategorias)->create();
+        factory(Tag::class,$cantidadTags);
 
     }
 }

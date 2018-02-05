@@ -8,7 +8,7 @@
         <div class="content-post">
             <header class="container-flex space-between">
                 <div class="date">
-                    <span class="c-gray-1">{{ $post->published_at->format('d M Y') }}</span>
+                    <span class="c-gray">{{ $post->published_at->format('d M Y') }}</span>
                 </div>
                 <div class="post-category">
                     <span class="category text-capitalize">{{ $post->category->name }}</span>
@@ -19,7 +19,7 @@
             <p>{{ $post->excerpt }}</p>
             <footer class="container-flex space-between">
                 <div class="read-more">
-                    <a href="#" class="text-uppercase c-green">read more</a>
+                    <a href="blog/{{ $post->url }}" class="text-uppercase c-green">Leer más…</a>
                 </div>
                 <div class="tags container-flex">
                     @foreach($post->tags as $tag)
