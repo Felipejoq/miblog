@@ -3,7 +3,9 @@
 use App\Category;
 use App\Post;
 use App\Tag;
+use App\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class PostsTableSeeder extends Seeder
 {
@@ -28,7 +30,13 @@ class PostsTableSeeder extends Seeder
 
         factory(Post::class, $cantidadPosts)->create();
         factory(Category::class,$cantidadCategorias)->create();
-        factory(Tag::class,$cantidadTags);
+        factory(Tag::class,$cantidadTags)->create();
+
+        $user = new User();
+        $user->name = 'Felipe';
+        $user->email = 'contacto@blog.dev';
+        $user->password = bcrypt('123456');
+        $user->save();
 
     }
 }

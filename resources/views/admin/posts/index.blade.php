@@ -18,6 +18,14 @@
     <div class="box">
         <div class="box-header">
             <h3 class="box-title">Listado de publicaciones</h3>
+
+            <button type="button"
+                    data-toggle="modal"
+                    data-target="#exampleModal"
+                    class="btn btn-primary pull-right">
+                <i class="fa fa-edit"></i> Crear nuevo post
+            </button>
+
         </div>
         <!-- /.box-header -->
         <div class="box-body">

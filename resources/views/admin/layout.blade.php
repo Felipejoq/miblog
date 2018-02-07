@@ -382,6 +382,8 @@ desired effect
 <!-- Bootstrap 3.3.7 -->
 <script src="/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
+@include('admin.partials.modal-create-post')
+
 @stack('scripts')
 
 <!-- AdminLTE App -->

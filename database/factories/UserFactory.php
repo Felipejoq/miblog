@@ -28,14 +28,14 @@ $factory->define(Post::class, function (Faker $faker) {
         'excerpt' => $faker->paragraph(1),
         'body' => $faker->paragraph(3),
         'published_at' => Carbon::now()->subDay($faker->numberBetween(1,5))->subHour($faker->numberBetween(1,10)),
-        'category_id' => $faker->numberBetween(1,10)
+        'category_id' => $faker->numberBetween(1,10),
     ];
 });
 
 $factory->define(Category::class, function (Faker $faker){
 
     return [
-        'name' => $faker->word
+        'name' => $faker->word,
     ];
 
 });
@@ -45,5 +45,15 @@ $factory->define(Tag::class, function (Faker $faker){
     return [
         'name' => $faker->word
     ];
+});
 
+$factory->define('post_tag', function (Faker $faker){
+
+    $posts = Post::all();
+    $tags = Post::all();
+
+    return [
+        'post_id' => $posts->random()->id,
+        'tag_id' => $tags->random()-id
+    ];
 });
