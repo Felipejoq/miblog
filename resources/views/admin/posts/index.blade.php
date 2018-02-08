@@ -45,8 +45,9 @@
                         <td>{{ $post->title }}</td>
                         <td>{{ $post->excerpt }}</td>
                         <td>
-                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i></a>
-                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-times"></i></a>
+                            <a target="_blank" href="{{ route('posts.show', $post) }}" class="btn btn-default btn-xs"><i class="fa fa-eye"></i></a>
+                            <a href="{{ route('admin.posts.update',$post) }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i></a>
+                            <a target="_blank" href="#" class="btn btn-danger btn-xs"><i class="fa fa-times"></i></a>
                         </td>
                     </tr>
 
@@ -79,7 +80,7 @@
             $('#posts-table').DataTable({
                 'paging'      : true,
                 'lengthChange': false,
-                'searching'   : false,
+                'searching'   : true,
                 'ordering'    : true,
                 'info'        : true,
                 'autoWidth'   : false

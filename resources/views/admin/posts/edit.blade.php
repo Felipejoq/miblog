@@ -33,10 +33,16 @@
 
                         <div class="form-group {{ $errors->has('body') ? 'has-error' : '' }}">
                             <label for="body">Contenido del post</label>
-                            <textarea class="form-control" name="body" id="body" cols="30" rows="10" placeholder="Escribe el contenido del post...">
+                            <textarea class="form-control" name="body" id="body" cols="50" rows="20" placeholder="Escribe el contenido del post...">
                                 {{ old('body', $post->body) }}
                             </textarea>
                             {!! $errors->first('body','<span class="help-block">:message</span>') !!}
+                        </div>
+
+                        <div class="form-group {{ $errors->has('iframe') ? 'has-error' : '' }}">
+                            <label for="iframe">Inserte un video o un audio (iframe)</label>
+                            <textarea class="form-control" name="iframe" id="iframe" cols="30" rows="2" placeholder="Inserte el iframe...">{{ old('iframe', $post->iframe) }}</textarea>
+                            {!! $errors->first('iframe','<span class="help-block">:message</span>') !!}
                         </div>
                     </div>
                     <!-- /.box-body -->
@@ -94,13 +100,23 @@
                 </div>
             </div>
         </form>
-        <div class="col-md-12">
-            <div class="box box-primary">
-                <div class="box-body">
-                    Aquí irán las fotos del post
+        @if($post->photos->count())
+            <div class="col-md-8">
+                <div class="box box-primary">
+                    <div class="box-body">
+                        @foreach($post->photos as $photo)
+                            <form method="POST" action="{{ route('admin.photos.destroy', $photo) }}">
+                                {{ method_field('DELETE') }} {{ csrf_field() }}
+                                <div class="col-md-2">
+                                    <button type="submit" class="btn btn-danger btn-xs" style="position: absolute;"><i class="fa fa-remove"></i></button>
+                                    <img src="{{ url($photo->url) }}" alt="" class="img-responsive">
+                                </div>
+                            </form>
+                        @endforeach
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
     </div>
 @stop
 
@@ -137,6 +153,8 @@
             });
             //Editor texto enriquecido
             CKEDITOR.replace('body');
+            CKEDITOR.config.height = 316;
+
         });
 
         Dropzone.autoDiscover = false;

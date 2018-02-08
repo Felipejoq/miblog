@@ -20,13 +20,13 @@ use Faker\Generator as Faker;
 
 $factory->define(Post::class, function (Faker $faker) {
 
-    $titulo = $faker->words(3,true);
+    $titulo = $faker->words(6,true);
 
     return [
         'title' => $titulo,
         'url' => str_slug($titulo,'-'),
         'excerpt' => $faker->paragraph(1),
-        'body' => $faker->paragraph(3),
+        'body' => $faker->paragraph(50),
         'published_at' => Carbon::now()->subDay($faker->numberBetween(1,5))->subHour($faker->numberBetween(1,10)),
         'category_id' => $faker->numberBetween(1,10),
     ];
@@ -34,8 +34,13 @@ $factory->define(Post::class, function (Faker $faker) {
 
 $factory->define(Category::class, function (Faker $faker){
 
+    $nombre = $faker->words(2,true);
+
+    $slug = str_slug($nombre,'-');
+
     return [
-        'name' => $faker->word,
+        'name' => $nombre,
+        'url' => $slug,
     ];
 
 });

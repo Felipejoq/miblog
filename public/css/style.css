@@ -43,6 +43,14 @@ header nav li a:hover{
 	top: 30px;
 	text-transform: capitalize;
 }
+.post .category a{
+	color: inherit;
+	font-size: inherit;
+}
+.category-title{
+	font-size: 20px;
+}
+
 .post figure{
 	margin:0;
 }
@@ -80,11 +88,12 @@ header nav li a:hover{
 }
 .masonry .gallery-image {
 	display: inline-block;
-	width: 100%;
-	margin-bottom: 20px;
-	padding: 4px;
-	border: 1px solid #000;
+	width: 100% !important;
+	margin-bottom: 0px;
+	padding: 0px;
+	border: 0px solid #000;
 }
+
 cite, .cite{
 	font-size: 22px;
 	line-height: 1.7;
@@ -283,7 +292,31 @@ a.btn-bar{
 	float: left;
 	margin-right: 0.3em;
 }
-      
-      
 
+.overlay{
+	display: flex;
+	justify-content: center;
+	justify-items: center;
+	width: 100%;
+	height: 100%;
+	color: #FFF;
+	font-size: 20px;
+	background-color: rgba(0,0,0,0.5);
+	position: absolute;
+}
 
+.overlay a{
+	color: #fff;
+}
+
+.gallery-photos{
+	overflow: hidden;
+}
+
+.carousel-inner .item img{
+	width: 100%;
+}
+
+.img-responsive{
+	width: 100%;
+}

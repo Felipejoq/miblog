@@ -32,4 +32,8 @@ class Post extends Model
             ->orderby('published_at','desc');
     }
 
+    public function photos(){
+        return $this->hasMany(Photo::class);
+    }
+
 }

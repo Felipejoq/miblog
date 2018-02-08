@@ -25,8 +25,8 @@ class PostsTableSeeder extends Seeder
         Tag::flushEventListeners();
 
         $cantidadCategorias = 10;
-        $cantidadPosts = 5;
-        $cantidadTags = 3;
+        $cantidadPosts = 30;
+        $cantidadTags = 15;
 
         factory(Post::class, $cantidadPosts)->create();
         factory(Category::class,$cantidadCategorias)->create();
@@ -34,7 +34,7 @@ class PostsTableSeeder extends Seeder
 
         $user = new User();
         $user->name = 'Felipe';
-        $user->email = 'contacto@blog.dev';
+        $user->email = 'miblog@miblog.test';
         $user->password = bcrypt('123456');
         $user->save();
 

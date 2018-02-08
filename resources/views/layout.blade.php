@@ -12,8 +12,12 @@
     <link rel="stylesheet" href="/css/framework.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/responsive.css">
+
+    @stack('styles')
+
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+
 </head>
 <body>
 <div class="preload"></div>
