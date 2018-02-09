@@ -16,6 +16,11 @@ class Post extends Model
         return 'url';
     }
 
+    public function setTitleAttribute($title){
+        $this->attributes['title'] = $title;
+        $this->attributes['url'] = str_slug($title,'-');
+    }
+
     protected function category()
     {
         return $this->belongsTo(Category::class);

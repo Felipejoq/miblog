@@ -3,10 +3,18 @@
 @section('contenido')
     <section class="posts container">
 
-        @if(isset($category))
+        @if(isset($title))
             <div class="post">
                 <div class="content-post category-title">
-                    <h3>&curlyeqsucc; Post de la categoría: {{ $category->name }}.</h3>
+                    <h3>{{ $title }}</h3>
+                </div>
+            </div>
+        @endif
+
+        @if(isset($tag))
+            <div class="post">
+                <div class="content-post category-title">
+                    <h3>&curlyeqsucc; Post de la etiqueta: {{ $tag->name }}.</h3>
                 </div>
             </div>
         @endif
@@ -48,11 +56,11 @@
                     <p>{{ $post->excerpt }}</p>
                     <footer class="container-flex space-between">
                         <div class="read-more">
-                            <a href="blog/{{ $post->url }}" class="text-uppercase c-green">Leer más…</a>
+                            <a href="{{ route('posts.show',$post) }}" class="text-uppercase c-green">Leer más…</a>
                         </div>
                         <div class="tags container-flex">
                             @foreach($post->tags as $tag)
-                                <span class="tag c-gris text-capitalize">#{{ $tag->name }}</span>
+                                <span class="tag c-gris text-capitalize"><a href="{{route('tag.show', $tag)}}">#{{ $tag->name }}</a></span>
                             @endforeach
                         </div>
                     </footer>

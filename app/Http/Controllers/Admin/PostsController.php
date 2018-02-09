@@ -38,10 +38,7 @@ class PostsController extends Controller
 
         $this->validate($request,$rules);
 
-        $post = Post::create([
-            'title' => $request->get('title'),
-            'url' => str_slug($request->get('title'),'-')
-        ]);
+        $post = Post::create($request->only('title'));
 
         return redirect()->route('admin.posts.edit',compact('post'));
 
@@ -70,16 +67,27 @@ class PostsController extends Controller
         $this->validate($request,$rules);
 
         $post->title = $request->get('title');
-        $post->url = str_slug($request->get('title'),'-');
         $post->body = $request->get('body');
         $post->iframe = $request->get('iframe');
         $post->excerpt = $request->get('excerpt');
-        $post->category_id = $request->get('category');
+
+        $post->category_id = Category::find($cat = $request->get('category'))
+                                    ? $cat
+                                    : Category::create(['name' => $cat])->id;
+
         $post->published_at = $request->has('published_at') ? Carbon::instance(new \DateTime($request->publised_at)) : null;
 
         $post->save();
 
-        $post->tags()->sync($request->get('tags'));
+        $tags = [];
+
+        foreach ($request->get('tags') as $tag) {
+
+            $tags[] = Tag::find($tag) ? $tag : Tag::create(['name' => $tag])->id;
+
+        }
+
+        $post->tags()->sync($tags);
 
 
         return redirect()

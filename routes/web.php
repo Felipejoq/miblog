@@ -14,6 +14,7 @@
 Route::get('/', 'PagesController@home');
 Route::get('blog/{post}', 'PostsController@show')->name('posts.show');
 Route::get('category/{category}', 'CategoriesController@show')->name('category.show');
+Route::get('tag/{tag}', 'TagsController@show')->name('tag.show');
 
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth'],function (){

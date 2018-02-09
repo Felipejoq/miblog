@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('meta-title',$post->title . "- Blog")
+@section('meta-title',$post->title . " - Blog")
 @section('meta-content',$post->excerpt)
 
 @section('contenido')

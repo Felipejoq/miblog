@@ -47,8 +47,10 @@ $factory->define(Category::class, function (Faker $faker){
 
 $factory->define(Tag::class, function (Faker $faker){
 
+    $nombre = $faker->words(2,true);
+
     return [
-        'name' => $faker->word
+        'name' => $nombre
     ];
 });
 

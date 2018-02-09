@@ -64,7 +64,7 @@
 
                         <div class="form-group {{ $errors->has('category') ? 'has-error' : '' }}">
                             <label>Selecciona una categoría:</label>
-                            <select name="category" id="category" class="form-control">
+                            <select name="category" id="category" class="form-control select2">
                                 <option value="">Selecciona una categoría...</option>
                                 @foreach($categories as $category)
                                     <option value="{{ $category->id }}" {{ old('category', $post->category_id) == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
@@ -142,7 +142,9 @@
 
     <script>
         //Initialize Select2 Elements
-        $('.select2').select2();
+        $('.select2').select2({
+            'tags' : true
+        });
     </script>
 
     <script>
