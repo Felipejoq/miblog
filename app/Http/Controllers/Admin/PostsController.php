@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Category;
+use App\Http\Requests\StorePostRequest;
 use App\Post;
 use App\Tag;
 use Carbon\Carbon;
@@ -52,43 +53,18 @@ class PostsController extends Controller
         return view('admin.posts.edit', compact(['post','categories','tags']));
     }
 
-    public function update(Post $post, Request $request){
+    public function update(Post $post, StorePostRequest $request){
 
-        //Validación
+//        $post->title = $request->get('title');
+//        $post->body = $request->get('body');
+//        $post->iframe = $request->get('iframe');
+//        $post->excerpt = $request->get('excerpt');
+//        $post->category_id = $request->get('category_id');
+//        $post->published_at = $request->get('published_at');
+//        $post->save();
 
-        $rules = [
-            'title' => 'required',
-            'body' => 'required',
-            'category' => 'required',
-            'tags' => 'required',
-            'excerpt' => 'required'
-        ];
-
-        $this->validate($request,$rules);
-
-        $post->title = $request->get('title');
-        $post->body = $request->get('body');
-        $post->iframe = $request->get('iframe');
-        $post->excerpt = $request->get('excerpt');
-
-        $post->category_id = Category::find($cat = $request->get('category'))
-                                    ? $cat
-                                    : Category::create(['name' => $cat])->id;
-
-        $post->published_at = $request->has('published_at') ? Carbon::instance(new \DateTime($request->publised_at)) : null;
-
-        $post->save();
-
-        $tags = [];
-
-        foreach ($request->get('tags') as $tag) {
-
-            $tags[] = Tag::find($tag) ? $tag : Tag::create(['name' => $tag])->id;
-
-        }
-
-        $post->tags()->sync($tags);
-
+        $post->update($request->all());
+        $post->syncTags($request->get('tags'));
 
         return redirect()
             ->route('admin.posts.edit',compact('post'))
