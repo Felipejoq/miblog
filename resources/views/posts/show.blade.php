@@ -7,24 +7,18 @@
 
     <article class="post container">
 
-        @if($post->photos->count() === 1)
-            <figure><img src="{{ url($post->photos->first()->url) }}" class="img-responsive"></figure>
-        @elseif($post->photos->count() >= 1)
-            @include('partials.carousel')
-        @elseif($post->iframe)
-            <div class="video">
-                {!! $post->iframe !!}
-            </div>
-        @endif
+        @include( $post->viewType() )
 
         <div class="content-post">
             <header class="container-flex space-between">
                 <div class="date">
-                    <span class="c-gris">{{ $post->published_at->format('d M Y') }}</span>
+                    <span class="c-gris">{{ optional($post->published_at)->format('d M Y') }} / {{ $post->owner->name }}</span>
                 </div>
-                <div class="post-category">
-                    <span class="category">{{ $post->category->name }}</span>
-                </div>
+                @if($post->category)
+                    <div class="post-category">
+                        <span class="category">{{ $post->category->name }}</span>
+                    </div>
+                @endif
             </header>
             <h1>{{ $post->title }}</h1>
             <div class="divider"></div>
@@ -53,10 +47,4 @@
 
 @push('scripts')
     <script id="dsq-count-scr" src="http://zendero.disqus.com/count.js" async></script>
-    <script src="/js/jquery-3.3.1.min.js"></script>
-    <srcript src="/js/bootstrap.min.js"></srcript>
-@endpush
-
-@push('styles')
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
 @endpush

@@ -2,7 +2,7 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
 
-        <form action="{{route('admin.posts.store')}}" method="POST">
+        <form action="{{route('admin.posts.store', '#create')}}" method="POST">
             {{  csrf_field() }}
 
             <div class="modal-content">
@@ -15,10 +15,9 @@
                 <div class="modal-body">
 
                     <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
-                        <input value="{{ old('title') }}" id="title" name="title" type="text" class="form-control" placeholder="Escribe el título del post..." required />
+                        <input value="{{ old('title') }}" id="title" name="title" type="text" class="form-control" placeholder="Escribe el título del post..." />
                         {!! $errors->first('title','<span class="help-block">:message</span>') !!}
                     </div>
-
 
                 </div>
                 <div class="modal-footer">

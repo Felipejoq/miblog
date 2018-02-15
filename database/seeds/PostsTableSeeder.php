@@ -28,15 +28,15 @@ class PostsTableSeeder extends Seeder
         $cantidadPosts = 30;
         $cantidadTags = 15;
 
-        factory(Post::class, $cantidadPosts)->create();
-        factory(Category::class,$cantidadCategorias)->create();
-        factory(Tag::class,$cantidadTags)->create();
-
         $user = new User();
         $user->name = 'Felipe';
         $user->email = 'miblog@miblog.test';
         $user->password = bcrypt('123456');
         $user->save();
+
+        factory(Category::class,$cantidadCategorias)->create();
+        factory(Post::class, $cantidadPosts)->create();
+        factory(Tag::class,$cantidadTags)->create();
 
     }
 }

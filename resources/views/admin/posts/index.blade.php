@@ -46,8 +46,11 @@
                         <td>{{ $post->excerpt }}</td>
                         <td>
                             <a target="_blank" href="{{ route('posts.show', $post) }}" class="btn btn-default btn-xs"><i class="fa fa-eye"></i></a>
-                            <a href="{{ route('admin.posts.update',$post) }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i></a>
-                            <a target="_blank" href="#" class="btn btn-danger btn-xs"><i class="fa fa-times"></i></a>
+                            <a href="{{ route('admin.posts.update', $post) }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i></a>
+                            <form action="{{ route('admin.posts.destroy', $post) }}" method="POST" style="display:inline;">
+                                {{ csrf_field() }} {{ method_field('DELETE') }}
+                                <button class="btn btn-danger btn-xs" onclick="return confirm('¿Quieres eliminar el post?')"><i class="fa fa-times"></i></button>
+                            </form>
                         </td>
                     </tr>
 

@@ -29,38 +29,23 @@ $factory->define(Post::class, function (Faker $faker) {
         'body' => $faker->paragraph(50),
         'published_at' => Carbon::now()->subDay($faker->numberBetween(1,5))->subHour($faker->numberBetween(1,10)),
         'category_id' => $faker->numberBetween(1,10),
+        'user_id' => 1,
     ];
 });
 
 $factory->define(Category::class, function (Faker $faker){
 
-    $nombre = $faker->words(2,true);
-
-    $slug = str_slug($nombre,'-');
-
     return [
-        'name' => $nombre,
-        'url' => $slug,
+        'name' => $faker->words(2, true)
     ];
 
 });
 
 $factory->define(Tag::class, function (Faker $faker){
 
-    $nombre = $faker->words(2,true);
+    $nombre = $faker->words(2, true);
 
     return [
         'name' => $nombre
-    ];
-});
-
-$factory->define('post_tag', function (Faker $faker){
-
-    $posts = Post::all();
-    $tags = Post::all();
-
-    return [
-        'post_id' => $posts->random()->id,
-        'tag_id' => $tags->random()-id
     ];
 });

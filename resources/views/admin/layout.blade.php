@@ -16,9 +16,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Ionicons -->
     <link rel="stylesheet" href="/adminlte/bower_components/Ionicons/css/ionicons.min.css">
 
-    @stack('styles')
+@stack('styles')
 
-    <!-- Theme style -->
+<!-- Theme style -->
     <link rel="stylesheet" href="/adminlte/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
           page. However, you can choose any other skin. Make sure you
@@ -190,33 +190,16 @@ desired effect
                                 <img src="/adminlte/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                                 <p>
-                                    {{ auth()->user()->name }} - Web Developer
-                                    <small>Miembro desde {{ auth()->user()->created_at }}</small>
+                                    {{ auth()->user()->name }}
+                                    <small>Miembro desde {{ auth()->user()->created_at->format('d/M/Y') }}</small>
                                 </p>
-                            </li>
-                            <!-- Menu Body -->
-                            <li class="user-body">
-                                <div class="row">
-                                    <div class="col-xs-4 text-center">
-                                        <a href="#">Followers</a>
-                                    </div>
-                                    <div class="col-xs-4 text-center">
-                                        <a href="#">Sales</a>
-                                    </div>
-                                    <div class="col-xs-4 text-center">
-                                        <a href="#">Friends</a>
-                                    </div>
-                                </div>
-                                <!-- /.row -->
                             </li>
                             <!-- Menu Footer-->
                             <li class="user-footer">
-                                <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">Profile</a>
-                                </div>
-                                <div class="pull-right">
-                                    <a href="{{route('logout')}}" class="btn btn-default btn-flat">Sign out</a>
-                                </div>
+                                    <form action="{{route('logout')}}" method="POST">
+                                        {{ csrf_field() }}
+                                        <button class="btn btn-default btn-flat btn-block">Cerrar sesión</button>
+                                    </form>
                             </li>
                         </ul>
                     </li>
@@ -247,20 +230,20 @@ desired effect
             </div>
 
             <!-- search form (Optional) -->
-            {{--<form action="#" method="get" class="sidebar-form">--}}
-                {{--<div class="input-group">--}}
-                    {{--<input type="text" name="q" class="form-control" placeholder="Search...">--}}
-                    {{--<span class="input-group-btn">--}}
-              {{--<button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>--}}
-              {{--</button>--}}
-            {{--</span>--}}
-                {{--</div>--}}
-            {{--</form>--}}
-            <!-- /.search form -->
+        {{--<form action="#" method="get" class="sidebar-form">--}}
+        {{--<div class="input-group">--}}
+        {{--<input type="text" name="q" class="form-control" placeholder="Search...">--}}
+        {{--<span class="input-group-btn">--}}
+        {{--<button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>--}}
+        {{--</button>--}}
+        {{--</span>--}}
+        {{--</div>--}}
+        {{--</form>--}}
+        <!-- /.search form -->
 
             <!-- Sidebar Menu -->
-            @include('admin.partials.nav')
-            <!-- /.sidebar-menu -->
+        @include('admin.partials.nav')
+        <!-- /.sidebar-menu -->
         </section>
         <!-- /.sidebar -->
     </aside>
@@ -388,6 +371,20 @@ desired effect
 
 <!-- AdminLTE App -->
 <script src="/adminlte/js/adminlte.min.js"></script>
+
+<script>
+    if(window.location.hash === '#create'){
+        $('#exampleModal').modal('show');
+    }
+
+    $('#exampleModal').on('hide.bs.modal', function () {
+        window.location.hash = '#create';
+    });
+
+    $('#exampleModal').on('show.bs.modal', function () {
+        window.location.hash = '';
+    });
+</script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the

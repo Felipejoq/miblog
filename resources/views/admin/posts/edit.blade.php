@@ -145,9 +145,11 @@
         $('.select2').select2({
             'tags' : true
         });
-    </script>
 
-    <script>
+        if(window.location.hash === '#create'){
+            window.location.hash = '#';
+        }
+
         $(function () {
             //Date picker
             $('#datepicker').datepicker({

@@ -8,19 +8,46 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     protected $fillable = [
-        'title', 'body', 'iframe', 'excerpt', 'category_id', 'published_at'
+        'title', 'body', 'iframe', 'excerpt', 'category_id', 'published_at', 'user_id'
     ];
 
     protected $dates = ['published_at'];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($post){
+            $post->tags()->detach();
+            $post->photos->each->delete();
+        });
+    }
 
     public function getRouteKeyName()
     {
         return 'url';
     }
 
-    public function setTitleAttribute($title){
-        $this->attributes['title'] = $title;
-        $this->attributes['url'] = str_slug($title,'-');
+    public static function create(array $attributes = []){
+
+        $attributes['user_id'] = auth()->id();
+        $post = static::query()->create($attributes);
+        $post->generateURL();
+
+        return $post;
+
+    }
+
+    public function generateURL(){
+        $url = str_slug($this->title);
+
+        if ($this->where('url',$url)->exists()){
+            $url = "{$url}-{$this->id}";
+        }
+
+        $this->url = $url;
+
+        $this->save();
     }
 
     protected function category()
@@ -43,6 +70,10 @@ class Post extends Model
         return $this->hasMany(Photo::class);
     }
 
+    public function owner(){
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     public function setCategoryIdAttribute($category){
         $this->attributes['category_id'] = Category::find($category)
                                             ? $category
@@ -62,4 +93,22 @@ class Post extends Model
 
         return $this->tags()->sync($tagIds);
     }
+
+    public function isPublished(){
+
+        return ! is_null($this->published_at && $this->published_at < today());
+    }
+
+    public function viewType($home = ''){
+        if($this->photos->count() === 1):
+            return 'posts.photo';
+        elseif($this->photos->count() >= 1):
+            return $home === 'home' ? 'posts.gallery ' : 'posts.carousel';
+        elseif($this->iframe):
+            return 'posts.iframe-post';
+        else:
+            return 'posts.text';
+        endif;
+    }
+
 }

@@ -22,30 +22,13 @@
         @foreach( $posts as $post )
 
             <article class="post">
-                @if($post->photos->count() === 1)
-                    <figure><img src="{{ url($post->photos->first()->url) }}" class="img-responsive"></figure>
-                @elseif($post->photos->count() >= 1)
-                    <div class="gallery-photos" data-masonry='{ "itemSelector": ".grid-item","columnWidth":464 }'>
-                        @foreach($post->photos->take(4) as $photo)
-                            <figure class="gallery-image grid-item grid-item--height2">
-                                @if($loop->iteration === 4)
-                                    <div class="overlay"><p><a href="blog/{{$post->url}}">{{ $post->photos->count() }} Fotos</a></p></div>
-                                @endif
-                                <img src="{{ url($photo->url) }}" alt="">
-                            </figure>
-                        @endforeach
-                    </div>
-                @elseif($post->iframe)
-                    <div class="video">
-                        {!! $post->iframe !!}
-                    </div>
-                @endif
 
+                @include( $post->viewType('home') )
 
                 <div class="content-post">
                     <header class="container-flex space-between">
                         <div class="date">
-                            <span class="c-gray">{{ $post->published_at->format('d M Y') }}</span>
+                            <span class="c-gris">{{ $post->published_at->format('d M Y') }} / {{ $post->owner->name }}</span>
                         </div>
                         <div class="post-category">
                             <span class="category text-capitalize"><a href="{{ route('category.show', $post->category) }}">{{ $post->category->name }}</a></span>

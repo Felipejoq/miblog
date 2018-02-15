@@ -16,7 +16,7 @@ class PostsController extends Controller
 
     public function index(){
 
-        $posts = Post::all();
+        $posts = auth()->user()->posts;
 
         return view('admin.posts.index', compact('posts'));
 
@@ -24,22 +24,26 @@ class PostsController extends Controller
 
     public function create(){
 
-        $categories = Category::all();
-        $tags = Tag::all();
+        $this->authorize('create', new Post);
 
-        return view('admin.posts.create', compact(['categories','tags']));
+        return view('admin.posts.create',[
+            'categories' => Category::all(),
+            'tags' => Tag::all()
+        ]);
 
     }
 
     public function store(Request $request){
 
         $rules = [
-            'title' => 'required'
+            'title' => 'required|min:3'
         ];
 
         $this->validate($request,$rules);
 
-        $post = Post::create($request->only('title'));
+        $post = Post::create($request->all());
+
+        $post->save();
 
         return redirect()->route('admin.posts.edit',compact('post'));
 
@@ -47,21 +51,18 @@ class PostsController extends Controller
 
     public function edit(Post $post){
 
-        $categories = Category::all();
-        $tags = Tag::all();
+        $this->authorize('view', $post);
 
-        return view('admin.posts.edit', compact(['post','categories','tags']));
+        return view('admin.posts.edit', [
+            'post' => $post,
+            'tags' => Tag::all(),
+            'categories' => Category::all()
+        ]);
     }
 
     public function update(Post $post, StorePostRequest $request){
 
-//        $post->title = $request->get('title');
-//        $post->body = $request->get('body');
-//        $post->iframe = $request->get('iframe');
-//        $post->excerpt = $request->get('excerpt');
-//        $post->category_id = $request->get('category_id');
-//        $post->published_at = $request->get('published_at');
-//        $post->save();
+        $this->authorize('update',$post);
 
         $post->update($request->all());
         $post->syncTags($request->get('tags'));
@@ -69,6 +70,19 @@ class PostsController extends Controller
         return redirect()
             ->route('admin.posts.edit',compact('post'))
             ->with('flash','Tu publicación ha sido guardada!');
+
+    }
+
+    public function destroy(Post $post){
+
+        $this->authorize('delete',$post);
+
+        $post->delete();
+
+        return redirect()
+            ->route('admin.posts.index')
+            ->with('flash','La publicación ha sido eliminada!');
+
 
     }
 
