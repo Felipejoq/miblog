@@ -16,7 +16,7 @@
                 </div>
                 @if($post->category)
                     <div class="post-category">
-                        <span class="category">{{ $post->category->name }}</span>
+                        <span class="category text-capitalize"><a href="{{ route('category.show', $post->category) }}">{{ $post->category->name }}</a></span>
                     </div>
                 @endif
             </header>
