@@ -66,6 +66,16 @@ class Post extends Model
             ->orderby('published_at','desc');
     }
 
+    public function scopeAllowed($query){
+
+        if (auth()->user()->can('view', $this)){
+            return $query;
+        }
+
+        return $query->where('user_id', auth()->id());
+
+    }
+
     public function photos(){
         return $this->hasMany(Photo::class);
     }

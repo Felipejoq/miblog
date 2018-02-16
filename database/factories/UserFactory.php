@@ -29,7 +29,7 @@ $factory->define(Post::class, function (Faker $faker) {
         'body' => $faker->paragraph(50),
         'published_at' => Carbon::now()->subDay($faker->numberBetween(1,5))->subHour($faker->numberBetween(1,10)),
         'category_id' => $faker->numberBetween(1,10),
-        'user_id' => 1,
+        'user_id' => $faker->numberBetween(1,2)
     ];
 });
 

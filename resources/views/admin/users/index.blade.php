@@ -3,12 +3,12 @@
 @section('header')
 
     <h1>
-        Todos los posts del blog
-        <small>Lista de artículos</small>
+        USUARIOS
+        <small>Lista de usuarios</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> Inicio</a></li>
-        <li class="active">Posts</li>
+        <li class="active">Usuarios</li>
     </ol>
 
 @stop
@@ -17,13 +17,13 @@
 
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title">Listado de publicaciones</h3>
+            <h3 class="box-title">Listado de usuarios</h3>
 
             <button type="button"
                     data-toggle="modal"
                     data-target="#exampleModal"
                     class="btn btn-primary pull-right">
-                <i class="fa fa-edit"></i> Crear nuevo post
+                <i class="fa fa-edit"></i> Crear nuevo usuario
             </button>
 
         </div>
@@ -33,23 +33,25 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Título</th>
-                    <th>Resumen</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Roles</th>
                     <th>Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($posts as $post)
+                @foreach($users as $user)
                     <tr>
-                        <td>{{ $post->id }}</td>
-                        <td>{{ $post->title }}</td>
-                        <td>{{ $post->excerpt }}</td>
+                        <td>{{ $user->id }}</td>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td>{{ $user->getRoleNames()->implode(', ') }}</td>
                         <td>
-                            <a target="_blank" href="{{ route('posts.show', $post) }}" class="btn btn-default btn-xs"><i class="fa fa-eye"></i></a>
-                            <a href="{{ route('admin.posts.edit', $post) }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i></a>
-                            <form action="{{ route('admin.posts.destroy', $post) }}" method="POST" style="display:inline;">
+                            <a target="_blank" href="{{ route('admin.users.show', $user) }}" class="btn btn-default btn-xs"><i class="fa fa-eye"></i></a>
+                            <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i></a>
+                            <form action="{{ route('admin.users.destroy', $user) }}" method="POST" style="display:inline;">
                                 {{ csrf_field() }} {{ method_field('DELETE') }}
-                                <button class="btn btn-danger btn-xs" onclick="return confirm('¿Quieres eliminar el post?')"><i class="fa fa-times"></i></button>
+                                <button class="btn btn-danger btn-xs" onclick="return confirm('¿Quieres eliminar el usuario?')"><i class="fa fa-times"></i></button>
                             </form>
                         </td>
                     </tr>
