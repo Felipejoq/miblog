@@ -19,12 +19,9 @@
         <div class="box-header">
             <h3 class="box-title">Listado de usuarios</h3>
 
-            <button type="button"
-                    data-toggle="modal"
-                    data-target="#exampleModal"
-                    class="btn btn-primary pull-right">
-                <i class="fa fa-edit"></i> Crear nuevo usuario
-            </button>
+            <a href="{{route('admin.users.create')}}" type="button" class="btn btn-primary pull-right">
+                <i class="fa fa-users"></i> Crear nuevo usuario
+            </a>
 
         </div>
         <!-- /.box-header -->

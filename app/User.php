@@ -35,4 +35,14 @@ class User extends Authenticatable
     public function posts(){
         return $this->hasMany(Post::class);
     }
+
+    public function scopeAllowed($query){
+
+        if (auth()->user()->can('view', $this)){
+            return $query;
+        }
+
+        return $query->where('id', auth()->id());
+
+    }
 }

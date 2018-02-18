@@ -26,8 +26,13 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
     Route::resource('posts', 'PostsController',['except' => 'show', 'as' => 'admin']);
     Route::resource('users', 'UsersController',['as' => 'admin']);
 
-    Route::put('users/{user}/roles', 'UserRolesController@update')->name('admin.users.roles.update');
-    Route::put('users/{user}/permissions', 'UserPermissionsController@update')->name('admin.users.permissions.update');
+    Route::middleware('role:Admin')
+        ->put('users/{user}/roles', 'UserRolesController@update')
+        ->name('admin.users.roles.update');
+
+    Route::middleware('role:Admin')
+        ->put('users/{user}/permissions', 'UserPermissionsController@update')
+        ->name('admin.users.permissions.update');
 
     Route::post('posts/{post}/photos', 'PhotosController@store')->name('admin.posts.photos.update');
     Route::delete('photos/{photo}', 'PhotosController@destroy')->name('admin.photos.destroy');
